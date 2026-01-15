@@ -330,7 +330,7 @@ const PortfolioWebsite = () => {
         "Docker",
         "Kubernetes",
       ],
-      image: "src/assets/project4.png",
+      image: "images/project4.png",
       link: "#",
     },
     {
@@ -345,7 +345,7 @@ const PortfolioWebsite = () => {
         "GCP",
         "Jenkins",
       ],
-      image: "src/assets/project2.png",
+      image: "images/project2.png",
       link: "#",
     },
     {
@@ -353,7 +353,7 @@ const PortfolioWebsite = () => {
       description:
         "Flutter-based social platform with real-time chat, feeds, and cloud-hosted backend.",
       tech: ["Flutter", "Firebase", "Supabase"],
-      image: "src/assets/project3.png",
+      image: "images/project3.png",
       link: "#",
     },
     {
@@ -361,7 +361,7 @@ const PortfolioWebsite = () => {
       description:
         "Production website for Seneth Healing Foods with client management and order handling.",
       tech: ["PHP", "Bootstrap", "HTML", "MySQL"],
-      image: "src/assets/project6.png",
+      image: "images/project6.png",
       link: "#",
     },
     {
@@ -369,7 +369,7 @@ const PortfolioWebsite = () => {
       description:
         "Online shopping platform for electronics with integrated payment gateway.",
       tech: ["PHP", "Bootstrap", "MySQL"],
-      image: "src/assets/project5.png",
+      image: "images/project5.png",
       link: "#",
     },
     {
@@ -377,7 +377,7 @@ const PortfolioWebsite = () => {
       description:
         "Desktop management system for fisheries with JavaFX frontend and MySQL backend.",
       tech: ["JavaFX", "MySQL"],
-      image: "src/assets/project7.png",
+      image: "images/project7.png",
       link: "#",
     },
   ];
@@ -562,7 +562,7 @@ const PortfolioWebsite = () => {
               />
               <div className="absolute inset-2 rounded-full bg-[#000510] flex items-center justify-center overflow-hidden">
                 <img
-                  src="src/assets/myimage.png"
+                  src="images/myimage.png"
                   alt="Profile"
                   className="w-full h-full object-cover rounded-full"
                 />
