@@ -21,6 +21,8 @@ import {
   Layers,
   Server,
   GitBranch,
+  Database,
+  Settings,
 } from "lucide-react";
 import * as THREE from "three";
 
@@ -51,7 +53,7 @@ const PortfolioWebsite = () => {
       75,
       window.innerWidth / window.innerHeight,
       0.1,
-      1000
+      1000,
     );
     camera.position.z = 8;
 
@@ -113,7 +115,7 @@ const PortfolioWebsite = () => {
       mesh.position.set(
         Math.cos(angle) * 4,
         Math.sin(angle * 2) * 2,
-        Math.sin(angle) * 4
+        Math.sin(angle) * 4,
       );
       mesh.rotation.x = angle;
       scene.add(mesh);
@@ -141,11 +143,11 @@ const PortfolioWebsite = () => {
 
     particleGeometry.setAttribute(
       "position",
-      new THREE.BufferAttribute(positions, 3)
+      new THREE.BufferAttribute(positions, 3),
     );
     particleGeometry.setAttribute(
       "color",
-      new THREE.BufferAttribute(colors, 3)
+      new THREE.BufferAttribute(colors, 3),
     );
 
     const particleMaterial = new THREE.PointsMaterial({
@@ -429,6 +431,38 @@ const PortfolioWebsite = () => {
     { name: "CI/CD", level: 85, icon: <GitBranch className="w-4 h-4" /> },
   ];
 
+  const SkillCard = ({ title, color, skills }) => {
+    const colorClasses = {
+      cyan: "text-cyan-400",
+      purple: "text-purple-400",
+      green: "text-green-400",
+      pink: "text-pink-400",
+    };
+
+    return (
+      <div className="group glass-card p-6 rounded-2xl neon-border hover:scale-105 hover:shadow-2xl transition-all duration-300 cursor-pointer">
+        <h4
+          className={`${colorClasses[color]} font-bold text-xl mb-4 group-hover:neon-text transition-all`}
+        >
+          {title}
+        </h4>
+        <ul className="space-y-3 text-gray-300">
+          {skills.map((skill, index) => (
+            <li
+              key={index}
+              className="hover:text-white hover:translate-x-2 transition-all duration-200 flex items-center gap-2"
+            >
+              <span
+                className={`w-1.5 h-1.5 rounded-full bg-${color}-400 opacity-0 group-hover:opacity-100 transition-all`}
+              ></span>
+              {skill}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div className="bg-[#000510] text-white min-h-screen font-sans overflow-x-hidden relative">
       <style>{`
@@ -514,6 +548,15 @@ const PortfolioWebsite = () => {
                 )}
               </button>
             ))}
+
+            <a
+              href="https://drive.google.com/file/d/1oV_C9V8RBip6HV9BpWf8GkePVFBI3siw/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-medium hover:scale-105 transition-all duration-300"
+            >
+              Download CV
+            </a>
           </div>
 
           <button
@@ -542,6 +585,15 @@ const PortfolioWebsite = () => {
                 {item}
               </button>
             ))}
+            {/* Download CV - Mobile */}
+            <a
+              href="https://drive.google.com/uc?export=download&id=1oV_C9V8RBip6HV9BpWf8GkePVFBI3siw"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block px-6 py-4 text-cyan-400 font-semibold hover:bg-cyan-500/10 transition-all border-l-2 border-transparent hover:border-cyan-400"
+            >
+              Download CV
+            </a>
           </div>
         )}
       </nav>
@@ -582,13 +634,14 @@ const PortfolioWebsite = () => {
           </h1>
 
           <p className="text-2xl md:text-4xl text-cyan-400 mb-8 font-light neon-text">
-            DevOps Engineer • Cloud Architect • Full Stack Developer
+            Software Engineer • DevOps Enthusiast • Full Stack Developer
           </p>
 
           <p className="text-lg text-gray-400 mb-16 max-w-3xl mx-auto leading-relaxed">
-            Building next-generation cloud-native applications with cutting-edge
-            technology. Specializing in Kubernetes orchestration, CI/CD
-            automation, and scalable microservices architecture.
+            Computer Science undergraduate passionate about building scalable
+            web and mobile applications. Experienced in full-stack development
+            and familiar with DevOps practices including CI/CD and
+            containerization.
           </p>
 
           <div className="flex flex-wrap justify-center gap-6 mb-16">
@@ -674,37 +727,167 @@ const PortfolioWebsite = () => {
             </div>
           </div>
 
-          <div className="glass-card rounded-3xl p-12 neon-border">
-            <h3 className="text-4xl font-bold mb-12 text-center gradient-text">
-              TECHNICAL STACK
+          <div className="glass-card rounded-3xl p-12 neon-border relative overflow-hidden">
+            {/* Background Decoration */}
+            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+              <div className="absolute top-10 left-10 w-32 h-32 bg-cyan-500 rounded-full blur-3xl"></div>
+              <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-500 rounded-full blur-3xl"></div>
+            </div>
+
+            <h3 className="text-4xl font-bold mb-12 text-center gradient-text relative z-10">
+              TECHNICAL SKILLS
             </h3>
-            <div className="grid md:grid-cols-2 gap-8">
-              {skills.map((skill, idx) => (
-                <div key={idx} className="group">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-3">
-                      <div className="text-cyan-400 group-hover:scale-125 transition-transform">
-                        {skill.icon}
-                      </div>
-                      <span className="font-bold text-xl group-hover:text-cyan-400 transition-colors">
-                        {skill.name}
-                      </span>
-                    </div>
-                    <span className="text-cyan-400 font-mono text-xl">
-                      {skill.level}%
-                    </span>
-                  </div>
-                  <div className="h-4 glass-card rounded-full overflow-hidden neon-border">
-                    <div
-                      className="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 rounded-full transition-all duration-1000 shadow-lg"
-                      style={{
-                        width: `${skill.level}%`,
-                        boxShadow: "0 0 20px rgba(0, 255, 255, 0.6)",
-                      }}
-                    />
-                  </div>
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+              {/* Frontend Card */}
+              <div className="group glass-card p-6 rounded-2xl neon-border cursor-pointer hover:scale-105 hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-cyan-500/20 hover:bg-cyan-500/5 border border-cyan-500/30">
+                {/* Header with Icon */}
+                <div className="flex items-center gap-3 mb-6">
+                  <Code className="w-6 h-6 text-cyan-400 group-hover:scale-110 transition-transform duration-300" />
+                  <h4 className="text-cyan-400 font-bold text-xl group-hover:neon-text transition-all">
+                    Frontend
+                  </h4>
                 </div>
-              ))}
+
+                {/* Skills List */}
+                <ul className="space-y-3">
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      React
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      JavaScript / TypeScript
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      Tailwind CSS
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      Flutter
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Backend Card */}
+              <div className="group glass-card p-6 rounded-2xl neon-border cursor-pointer hover:scale-105 hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-purple-500/20 hover:bg-purple-500/5 border border-purple-500/30">
+                <div className="flex items-center gap-3 mb-6">
+                  <Server className="w-6 h-6 text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+                  <h4 className="text-purple-400 font-bold text-xl group-hover:neon-text transition-all">
+                    Backend
+                  </h4>
+                </div>
+
+                <ul className="space-y-3">
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      Spring Boot
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      .NET / C#
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      Express.js
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-purple-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      REST API Development
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Databases Card */}
+              <div className="group glass-card p-6 rounded-2xl neon-border cursor-pointer hover:scale-105 hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-green-500/20 hover:bg-green-500/5 border border-green-500/30">
+                <div className="flex items-center gap-3 mb-6">
+                  <Database className="w-6 h-6 text-green-400 group-hover:scale-110 transition-transform duration-300" />
+                  <h4 className="text-green-400 font-bold text-xl group-hover:neon-text transition-all">
+                    Databases
+                  </h4>
+                </div>
+
+                <ul className="space-y-3">
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      MySQL
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      PostgreSQL
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      MongoDB
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-green-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      SQL Server
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* DevOps & Tools Card */}
+              <div className="group glass-card p-6 rounded-2xl neon-border cursor-pointer hover:scale-105 hover:-translate-y-2 transition-all duration-300 hover:shadow-2xl hover:shadow-pink-500/20 hover:bg-pink-500/5 border border-pink-500/30">
+                <div className="flex items-center gap-3 mb-6">
+                  <Settings className="w-6 h-6 text-pink-400 group-hover:scale-110 transition-transform duration-300" />
+                  <h4 className="text-pink-400 font-bold text-xl group-hover:neon-text transition-all">
+                    DevOps & Tools
+                  </h4>
+                </div>
+
+                <ul className="space-y-3">
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      Git
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      Docker
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      AWS (Basic)
+                    </span>
+                  </li>
+                  <li className="group/item flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-pink-400 opacity-0 group-hover/item:opacity-100 transition-all duration-200"></span>
+                    <span className="text-gray-300 group-hover/item:text-white hover:translate-x-1 transition-all duration-200">
+                      CI/CD
+                    </span>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
